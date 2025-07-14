@@ -16,7 +16,7 @@ GO
 
 -- Tạo bảng citizens
 CREATE TABLE [dbo].[citizens] (
-    [id] bigint primary key IDENTITY(1,1),
+    [id] int primary key IDENTITY(1,1),
     [name] nvarchar(255) not null,
     [email] nvarchar(255) unique not null,
     [phone] nvarchar(50),
@@ -25,7 +25,7 @@ CREATE TABLE [dbo].[citizens] (
 
 -- Tạo bảng vehicles
 CREATE TABLE [dbo].[vehicles] (
-    [id] bigint primary key IDENTITY(1,1),
+    [id] int primary key IDENTITY(1,1),
     [owner_id] bigint not null,
     [license_plate] nvarchar(50) unique not null,
     [make] nvarchar(100),
@@ -36,14 +36,14 @@ CREATE TABLE [dbo].[vehicles] (
 
 -- Tạo bảng violation_types
 CREATE TABLE [dbo].[violation_types] (
-    [id] bigint primary key IDENTITY(1,1),
+    [id] int primary key IDENTITY(1,1),
     [name] nvarchar(100) not null,
     [description] nvarchar(255)
 );
 
 -- Tạo bảng report_statuses
 CREATE TABLE [dbo].[report_statuses] (
-    [id] bigint primary key IDENTITY(1,1),
+    [id] int primary key IDENTITY(1,1),
     [status] nvarchar(50) not null
 );
 

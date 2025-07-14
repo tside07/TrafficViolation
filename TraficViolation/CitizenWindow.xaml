@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TraficViolation"
         mc:Ignorable="d"
-        Title="Citizen" Height="938" Width="1204">
+        Title="Citizen" Height="762" Width="1095">
     <Window.Resources>
         <Style TargetType="Button" x:Key="MenuButton">
             <Setter Property="Background" Value="Transparent"/>
@@ -39,7 +39,6 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Padding" Value="15,12"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -100,7 +99,7 @@
                 <Button Style="{StaticResource MenuButton}" 
                         x:Name="btnDashboard"
                         Background="#1A2530"
-                        Foreground="White" Click="btnDashboard_Click">
+                        Foreground="White" >
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="&#xE80F;" FontFamily="Segoe MDL2 Assets" Margin="0,0,10,0"/>
                         <TextBlock Text="Trang chủ"/>
@@ -204,7 +203,7 @@
             <!-- Dashboard Content -->
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
                 <StackPanel Margin="20">
-                    
+
 
                     <!-- Quick Stats -->
                     <Grid Margin="0,0,0,20">
@@ -276,12 +275,6 @@
                                            FontSize="18" 
                                            FontWeight="SemiBold" 
                                            Foreground="#2C3E50"/>
-
-                                <TextBlock Text="Xem tất cả" 
-                                           HorizontalAlignment="Right"
-                                           VerticalAlignment="Center"
-                                           Foreground="#3498DB"
-                                           Cursor="Hand"/>
                             </Grid>
 
                             <Grid>
@@ -390,12 +383,6 @@
                                            FontSize="18" 
                                            FontWeight="SemiBold" 
                                            Foreground="#2C3E50"/>
-
-                                <TextBlock Text="Xem tất cả" 
-                                           HorizontalAlignment="Right"
-                                           VerticalAlignment="Center"
-                                           Foreground="#3498DB"
-                                           Cursor="Hand"/>
                             </Grid>
 
                             <Border BorderBrush="#EEEEEE" BorderThickness="0,0,0,1" Padding="0,0,0,10" Margin="0,0,0,10">

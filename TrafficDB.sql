@@ -26,11 +26,12 @@ CREATE TABLE [dbo].[citizens] (
 -- Tạo bảng vehicles
 CREATE TABLE [dbo].[vehicles] (
     [id] int primary key IDENTITY(1,1),
-    [owner_id] bigint not null,
+    [owner_id] int not null,
     [license_plate] nvarchar(50) unique not null,
     [make] nvarchar(100),
     [model] nvarchar(100),
     [year] int,
+    [vehicle_type] nvarchar(50),
     FOREIGN KEY (owner_id) REFERENCES [dbo].[citizens](id)
 );
 
@@ -49,14 +50,15 @@ CREATE TABLE [dbo].[report_statuses] (
 
 -- Tạo bảng violation_reports
 CREATE TABLE [dbo].[violation_reports] (
-    [id] bigint primary key IDENTITY(1,1),
-    [citizen_id] bigint not null,
-    [vehicle_id] bigint not null,
-    [violation_type_id] bigint not null,
-    [status_id] bigint not null,
+    [id] int primary key IDENTITY(1,1),
+    [citizen_id] int not null,
+    [vehicle_id] int not null,
+    [violation_type_id] int not null,
+    [status_id] int not null,
     [report_date] datetimeoffset default SYSDATETIMEOFFSET(),
     [location] nvarchar(255),
     [description] nvarchar(255),
+	[vehicle_type] nvarchar(255),
     FOREIGN KEY (citizen_id) REFERENCES [dbo].[citizens](id),
     FOREIGN KEY (vehicle_id) REFERENCES [dbo].[vehicles](id),
     FOREIGN KEY (violation_type_id) REFERENCES [dbo].[violation_types](id),
@@ -65,15 +67,15 @@ CREATE TABLE [dbo].[violation_reports] (
 
 -- Tạo bảng user_roles
 CREATE TABLE [dbo].[user_roles] (
-    [id] bigint primary key IDENTITY(1,1),
+    [id] int primary key IDENTITY(1,1),
     [role_name] nvarchar(50) unique not null
 );
 
 -- Tạo bảng users
 CREATE TABLE [dbo].[users] (
-    [id] bigint primary key IDENTITY(1,1),
-    [citizen_id] bigint,
-    [role_id] bigint not null,
+    [id] int primary key IDENTITY(1,1),
+    [citizen_id] int,
+    [role_id] int not null,
     [username] nvarchar(100) unique not null,
     [password_hash] nvarchar(255) not null,
     FOREIGN KEY (citizen_id) REFERENCES [dbo].[citizens](id),
@@ -87,10 +89,10 @@ INSERT INTO [dbo].[citizens] ([name], [email], [phone], [address]) VALUES
 (N'Phạm Văn C', N'phamvanc@example.com', N'0912345678', N'Số 789, Đường GHI, Quận 3');
 
 -- Thêm dữ liệu vào bảng vehicles
-INSERT INTO [dbo].[vehicles] ([owner_id], [license_plate], [make], [model], [year]) VALUES
-(1, N'29A-12345', N'Toyota', N'Corolla', 2015),
-(1, N'29B-67890', N'Ford', N'Fusion', 2010),
-(2, N'29C-54321', N'Chevrolet', N'Cruze', 2012);
+INSERT INTO [dbo].[vehicles] ([owner_id], [license_plate], [make], [model], [year], [vehicle_type]) VALUES
+(1, N'29A-12345', N'Toyota', N'Corolla', 2015, N'Xe con'),
+(1, N'29B-67890', N'Ford', N'Fusion', 2010, N'Xe con'),
+(2, N'29C-54321', N'Chevrolet', N'Cruze', 2012, N'Xe con');
 
 -- Thêm dữ liệu vào bảng violation_types
 INSERT INTO [dbo].[violation_types] ([name], [description]) VALUES

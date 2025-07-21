@@ -5,9 +5,9 @@ namespace TraficViolation.Models;
 
 public partial class Vehicle
 {
-    public long Id { get; set; }
+    public int Id { get; set; }
 
-    public long OwnerId { get; set; }
+    public int OwnerId { get; set; }
 
     public string LicensePlate { get; set; } = null!;
 

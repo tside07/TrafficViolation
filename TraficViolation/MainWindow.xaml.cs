@@ -9,6 +9,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Data.SqlClient;
+using TraficViolation.Models;
+using System.Linq;
 
 namespace TraficViolation
 {
@@ -17,11 +19,12 @@ namespace TraficViolation
     /// </summary>
     public partial class MainWindow : Window
     {
-        private string connectionString = ConfigHelper.GetConnectionString();
+        private TrafficViolationDbContext _context;
 
         public MainWindow()
         {
             InitializeComponent();
+            _context = new TrafficViolationDbContext();
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
@@ -37,68 +40,53 @@ namespace TraficViolation
 
             try
             {
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
-                    conn.Open();
-
-                    // Query để lấy thông tin user và role name
-                    string query = @"
-                        SELECT u.id, u.role_id, ur.role_name, u.citizen_id
-                        FROM users u
-                        INNER JOIN user_roles ur ON u.role_id = ur.id
-                        WHERE u.username = @username AND u.password_hash = @password";
-
-                    SqlCommand cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@username", username);
-                    cmd.Parameters.AddWithValue("@password", password);
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                var user = _context.Users
+                    .Where(u => u.Username == username && u.PasswordHash == password)
+                    .Select(u => new
                     {
-                        if (reader.Read())
-                        {
-                            long userIdLong = reader.GetInt64(0);     // user_id là BIGINT
-                            long roleIdLong = reader.GetInt64(1);     // role_id là BIGINT
-                            string roleName = reader.GetString(2);    // role_name
-                            object citizenIdObj = reader.GetValue(3); // citizen_id có thể null
+                        Id = u.Id,
+                        RoleId = u.RoleId,
+                        RoleName = u.Role.RoleName,
+                        CitizenId = u.CitizenId
+                    })
+                    .FirstOrDefault();
 
-                            int userId = (int)userIdLong;
-                            int roleId = (int)roleIdLong;
-                            int? citizenId = citizenIdObj == DBNull.Value ? null : (int?)Convert.ToInt64(citizenIdObj);
+                if (user != null)
+                {
+                    int userId = (int)user.Id;
+                    int roleId = (int)user.RoleId;
+                    string roleName = user.RoleName;
+                    int? citizenId = user.CitizenId;
 
-                            // Điều hướng dựa trên role_id
-                            switch (roleId)
-                            {
-                                case 1: // Quản trị viên (Admin)
-                                    var adminWindow = new AdminWindow();
-                                    adminWindow.Show();
-                                    this.Close();
-                                    break;
+                    // Điều hướng dựa trên role_id
+                    switch (roleId)
+                    {
+                        case 1:
+                            var adminWindow = new AdminWindow();
+                            adminWindow.Show();
+                            this.Close();
+                            break;
 
-                                case 2: // Moderator
-                                    var moderatorWindow = new AdminWindow(); // Hoặc tạo ModeratorWindow riêng
-                                    moderatorWindow.Show();
-                                    this.Close();
-                                    break;
+                        case 2:
+                            var moderatorWindow = new AdminWindow(); 
+                            moderatorWindow.Show();
+                            this.Close();
+                            break;
 
-                                case 3: // Người dùng (Citizen)
-                                    var citizenWindow = new CitizenWindow();
-                                    citizenWindow.Show();
-                                    this.Close();
-                                    break;
+                        case 3:
+                            var citizenWindow = new CitizenWindow();
+                            citizenWindow.Show();
+                            this.Close();
+                            break;
 
-                                default:
-                                    MessageBox.Show($"Unknown role: {roleName}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                                    break;
-                            }
-
-                            // Log thông tin đăng nhập (tùy chọn)
-                            Console.WriteLine($"User {username} logged in with role: {roleName} (ID: {roleId})");
-                        }
-                        else
-                        {
-                            MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
+                        default:
+                            MessageBox.Show($"Lỗi role không xác định: {roleName}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            break;
                     }
+                }
+                else
+                {
+                    MessageBox.Show("Tài khoản hoặc mật khẩu không hợp lệ", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
@@ -111,6 +99,13 @@ namespace TraficViolation
         {
             RegisterWindow registerWindow = new RegisterWindow();
             registerWindow.ShowDialog();
+        }
+
+        //tránh tràn bộ nhớ
+        protected override void OnClosed(EventArgs e)
+        {
+            _context?.Dispose();
+            base.OnClosed(e);
         }
     }
 }

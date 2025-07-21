@@ -5,7 +5,7 @@ namespace TraficViolation.Models;
 
 public partial class ViolationType
 {
-    public long Id { get; set; }
+    public int Id { get; set; }
 
     public string Name { get; set; } = null!;
 

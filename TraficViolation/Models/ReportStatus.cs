@@ -5,7 +5,7 @@ namespace TraficViolation.Models;
 
 public partial class ReportStatus
 {
-    public long Id { get; set; }
+    public int Id { get; set; }
 
     public string Status { get; set; } = null!;
 

@@ -5,421 +5,134 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TraficViolation"
         mc:Ignorable="d"
-        Title="Citizen" Height="762" Width="1095">
-    <Window.Resources>
-        <Style TargetType="Button" x:Key="MenuButton">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#CCCCCC"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Padding" Value="15,12"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" 
-                                Padding="{TemplateBinding Padding}">
-                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#1A2530"/>
-                    <Setter Property="Foreground" Value="White"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style TargetType="Button" x:Key="ActionButton">
-            <Setter Property="Background" Value="#3498DB"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Padding" Value="15,12"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" 
-                                CornerRadius="5"
-                                Padding="{TemplateBinding Padding}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#2980B9"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style TargetType="Border" x:Key="DashboardCard">
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="CornerRadius" Value="8"/>
-            <Setter Property="Padding" Value="20"/>
-            <Setter Property="Margin" Value="10"/>
-            <Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect ShadowDepth="1" BlurRadius="10" Opacity="0.1" Color="Black"/>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Resources>
-
+        Title="Citizen" Height="450" Width="800">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <!-- Left Sidebar -->
-        <Grid Grid.Column="0" Background="#2C3E50">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+        
+        <!-- Nội dung chính -->
+        <TabControl Grid.Row="1">
+            <!-- Gửi phản ánh -->
+            <TabItem Header="Gửi phản ánh">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="20">
+                        <TextBlock Text="Gửi phản ánh mới" FontSize="18" Margin="0,0,0,20"/>
 
-            <!-- Logo and App Name -->
-            <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0">
+                        <!-- Biển số xe -->
+                        <TextBlock Text="Biển số xe:" Margin="0,0,0,5"/>
+                        <TextBox Name="LicensePlateTextBox" Height="30" Margin="0,0,0,15"/>
 
-                <TextBlock Text="HỆ THỐNG ATGT" 
-                           Foreground="White" 
-                           FontSize="16" 
-                           FontWeight="Bold" 
-                           VerticalAlignment="Center"/>
-            </StackPanel>
+                        <!-- Ngày vi phạm -->
+                        <TextBlock Text="Ngày vi phạm:" Margin="0,0,0,5"/>
+                        <DatePicker Name="ViolationDatePicker" Height="30" Margin="0,0,0,15"/>
 
-            <!-- Menu Items -->
-            <StackPanel Grid.Row="1" Margin="0,20,0,0">
-                <Button Style="{StaticResource MenuButton}" 
-                        x:Name="btnDashboard"
-                        Background="#1A2530"
-                        Foreground="White" >
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="&#xE80F;" FontFamily="Segoe MDL2 Assets" Margin="0,0,10,0"/>
-                        <TextBlock Text="Trang chủ"/>
+                        <!-- Loại vi phạm -->
+                        <TextBlock Text="Loại vi phạm:" Margin="0,0,0,5"/>
+                        <ComboBox Name="cmbViolationType" Margin="0,0,0,15" Height="30">
+                            <ComboBoxItem Content="Vượt đèn đỏ"/>
+                            <ComboBoxItem Content="Đậu xe sai quy định"/>
+                            <ComboBoxItem Content="Vượt tốc độ"/>
+                            <ComboBoxItem Content="Khác"/>
+                        </ComboBox>
+
+                        <!-- Địa điểm -->
+                        <TextBlock Text="Địa điểm:" Margin="0,0,0,5"/>
+                        <TextBox Name="LocationTextBox" Height="30" Margin="0,0,0,15"/>
+
+                        <!-- Mô tả -->
+                        <TextBlock Text="Mô tả chi tiết:" Margin="0,0,0,5"/>
+                        <TextBox Name="DescriptionTextBox" Height="100" Margin="0,0,0,15" 
+                        TextWrapping="Wrap" AcceptsReturn="True"/>
+
+                        <!-- File đính kèm -->
+                        <TextBlock Text="Hình ảnh/Video:" Margin="0,0,0,5"/>
+                        <Button Name="AttachFileButton" Content="Chọn file" Width="100" 
+                        HorizontalAlignment="Left" Margin="0,0,0,20"/>
+
+                        <!-- Gửi -->
+                        <Button Name="SubmitReportButton" Content="Gửi phản ánh" Width="120" 
+                        HorizontalAlignment="Left" Background="LightBlue" Padding="10,5"/>
                     </StackPanel>
-                </Button>
-
-                <Button Style="{StaticResource MenuButton}" 
-                        x:Name="btnNewReport">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="&#xE710;" FontFamily="Segoe MDL2 Assets" Margin="0,0,10,0"/>
-                        <TextBlock Text="Gửi phản ánh mới"/>
-                    </StackPanel>
-                </Button>
-
-                <Button Style="{StaticResource MenuButton}" 
-                        x:Name="btnTrackReports">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="&#xE81C;" FontFamily="Segoe MDL2 Assets" Margin="0,0,10,0"/>
-                        <TextBlock Text="Theo dõi phản ánh"/>
-                    </StackPanel>
-                </Button>
-
-                <Button Style="{StaticResource MenuButton}" 
-                        x:Name="btnMyVehicles">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="&#xE804;" FontFamily="Segoe MDL2 Assets" Margin="0,0,10,0"/>
-                        <TextBlock Text="Phương tiện của tôi"/>
-                    </StackPanel>
-                </Button>
-
-                <Button Style="{StaticResource MenuButton}" 
-                        x:Name="btnNotifications">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="&#xE7E7;" FontFamily="Segoe MDL2 Assets" Margin="0,0,10,0"/>
-                        <TextBlock Text="Thông báo"/>
-                    </StackPanel>
-                </Button>
+                </ScrollViewer>
+            </TabItem>
 
 
-            </StackPanel>
-
-            <!-- Logout Button -->
-            <Button Grid.Row="2" 
-                    Style="{StaticResource MenuButton}" 
-                    x:Name="btnLogout"
-                    Margin="0,0,0,20">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="&#xE7E8;" FontFamily="Segoe MDL2 Assets" Margin="0,0,10,0"/>
-                    <TextBlock Text="Đăng xuất"/>
-                </StackPanel>
-            </Button>
-        </Grid>
-
-        <!-- Main Content -->
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="70"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <!-- Header -->
-            <Grid Grid.Row="0" Background="White">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <TextBlock Text="Trang chủ" 
-                           FontSize="20" 
-                           FontWeight="SemiBold" 
-                           VerticalAlignment="Center"
-                           Margin="30,0,0,0"
-                           Foreground="#2C3E50"/>
-
-                <StackPanel Grid.Column="1" 
-                            Orientation="Horizontal" 
-                            VerticalAlignment="Center"
-                            Margin="0,0,30,0">
-                    <Button Style="{StaticResource MenuButton}" 
-                            Background="Transparent"
-                            Foreground="#555555"
-                            Padding="10,0">
-                        <TextBlock Text="&#xE7E7;" FontFamily="Segoe MDL2 Assets" FontSize="16"/>
-                    </Button>
-
-                    <Border Width="1" Height="30" Background="#EEEEEE" Margin="5,0"/>
-
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Ellipse Width="36" Height="36" Margin="10,0">
-
-                        </Ellipse>
-                        <StackPanel VerticalAlignment="Center">
-                            <TextBlock Text="Công dân" 
-                                       FontSize="12"
-                                       Foreground="#777777"/>
-                        </StackPanel>
-                    </StackPanel>
-                </StackPanel>
-            </Grid>
-
-            <!-- Dashboard Content -->
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <!-- Theo dõi phản ánh -->
+            <TabItem Header="Theo dõi phản ánh">
                 <StackPanel Margin="20">
+                    <TextBlock Text="Danh sách phản ánh của bạn" FontSize="16"  Margin="0,0,0,10"/>
 
-
-                    <!-- Quick Stats -->
-                    <Grid Margin="0,0,0,20">
+                    <Grid Margin="0,0,0,10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <Border Grid.Column="0" Style="{StaticResource DashboardCard}">
-                            <StackPanel>
-                                <TextBlock Text="Tổng số phản ánh" 
-                                           FontSize="16"
-                                           Foreground="#777777"/>
-                                <TextBlock Text="5" 
-                                           FontSize="36"
-                                           FontWeight="Bold"
-                                           Foreground="#2C3E50"
-                                           Margin="0,10,0,0"/>
-                                <TextBlock Text="2 phản ánh mới trong tháng này" 
-                                           FontSize="12"
-                                           Foreground="#777777"
-                                           Margin="0,5,0,0"/>
-                            </StackPanel>
-                        </Border>
-
-                        <Border Grid.Column="1" Style="{StaticResource DashboardCard}">
-                            <StackPanel>
-                                <TextBlock Text="Đang xử lý" 
-                                           FontSize="16"
-                                           Foreground="#777777"/>
-                                <TextBlock Text="2" 
-                                           FontSize="36"
-                                           FontWeight="Bold"
-                                           Foreground="#F39C12"
-                                           Margin="0,10,0,0"/>
-                                <TextBlock Text="Đang chờ xác minh" 
-                                           FontSize="12"
-                                           Foreground="#777777"
-                                           Margin="0,5,0,0"/>
-                            </StackPanel>
-                        </Border>
-
-                        <Border Grid.Column="2" Style="{StaticResource DashboardCard}">
-                            <StackPanel>
-                                <TextBlock Text="Đã xử lý" 
-                                           FontSize="16"
-                                           Foreground="#777777"/>
-                                <TextBlock Text="3" 
-                                           FontSize="36"
-                                           FontWeight="Bold"
-                                           Foreground="#27AE60"
-                                           Margin="0,10,0,0"/>
-                                <TextBlock Text="2 được chấp nhận, 1 bị từ chối" 
-                                           FontSize="12"
-                                           Foreground="#777777"
-                                           Margin="0,5,0,0"/>
-                            </StackPanel>
-                        </Border>
+                        <TextBox Name="SearchTextBox" Grid.Column="0" Height="30" 
+                                Margin="0,0,10,0" Text="Tìm kiếm..."/>
+                        <Button Name="SearchButton" Grid.Column="1" Content="Tìm" 
+                               Width="60" Height="30"/>
                     </Grid>
 
-
-
-                    <!-- Recent Reports -->
-                    <Border Style="{StaticResource DashboardCard}" Margin="10,0,10,20">
-                        <StackPanel>
-                            <Grid Margin="0,0,0,15">
-                                <TextBlock Text="Phản ánh gần đây" 
-                                           FontSize="18" 
-                                           FontWeight="SemiBold" 
-                                           Foreground="#2C3E50"/>
-                            </Grid>
-
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-
-                                <!-- Headers -->
-                                <TextBlock Grid.Column="0" Grid.Row="0" 
-                                           Text="Mã phản ánh" 
-                                           FontWeight="SemiBold"
-                                           Padding="10,5"
-                                           Foreground="#555555"/>
-
-                                <TextBlock Grid.Column="1" Grid.Row="0" 
-                                           Text="Nội dung" 
-                                           FontWeight="SemiBold"
-                                           Padding="10,5"
-                                           Foreground="#555555"/>
-
-                                <TextBlock Grid.Column="2" Grid.Row="0" 
-                                           Text="Ngày gửi" 
-                                           FontWeight="SemiBold"
-                                           Padding="10,5"
-                                           Foreground="#555555"/>
-
-                                <TextBlock Grid.Column="3" Grid.Row="0" 
-                                           Text="Trạng thái" 
-                                           FontWeight="SemiBold"
-                                           Padding="10,5"
-                                           Foreground="#555555"/>
-
-                                <!-- Row 1 -->
-                                <TextBlock Grid.Column="0" Grid.Row="1" 
-                                           Text="PA-001" 
-                                           Padding="10,10"
-                                           Foreground="#2C3E50"/>
-
-                                <TextBlock Grid.Column="1" Grid.Row="1" 
-                                           Text="Xe máy vượt đèn đỏ tại ngã tư Nguyễn Trãi - Khuất Duy Tiến" 
-                                           Padding="10,10"
-                                           TextWrapping="Wrap"
-                                           Foreground="#2C3E50"/>
-
-                                <TextBlock Grid.Column="2" Grid.Row="1" 
-                                           Text="05/07/2025" 
-                                           Padding="10,10"
-                                           Foreground="#2C3E50"/>
-
-                                <Border Grid.Column="3" Grid.Row="1" 
-                                        Background="#FFF3CD" 
-                                        CornerRadius="4" 
-                                        Padding="8,4" 
-                                        Margin="10,5">
-                                    <TextBlock Text="Đang xử lý" 
-                                               Foreground="#856404"
-                                               FontSize="12"
-                                               HorizontalAlignment="Center"/>
-                                </Border>
-
-                                <!-- Row 2 -->
-                                <TextBlock Grid.Column="0" Grid.Row="2" 
-                                           Text="PA-002" 
-                                           Padding="10,10"
-                                           Foreground="#2C3E50"/>
-
-                                <TextBlock Grid.Column="1" Grid.Row="2" 
-                                           Text="Ô tô đậu sai quy định tại đường Lê Văn Lương" 
-                                           Padding="10,10"
-                                           TextWrapping="Wrap"
-                                           Foreground="#2C3E50"/>
-
-                                <TextBlock Grid.Column="2" Grid.Row="2" 
-                                           Text="10/07/2025" 
-                                           Padding="10,10"
-                                           Foreground="#2C3E50"/>
-
-                                <Border Grid.Column="3" Grid.Row="2" 
-                                        Background="#D4EDDA" 
-                                        CornerRadius="4" 
-                                        Padding="8,4" 
-                                        Margin="10,5">
-                                    <TextBlock Text="Đã xử lý" 
-                                               Foreground="#155724"
-                                               FontSize="12"
-                                               HorizontalAlignment="Center"/>
-                                </Border>
-                            </Grid>
-                        </StackPanel>
-                    </Border>
-
-                    <!-- Notifications -->
-                    <Border Style="{StaticResource DashboardCard}" Margin="10,0,10,20">
-                        <StackPanel>
-                            <Grid Margin="0,0,0,15">
-                                <TextBlock Text="Thông báo mới" 
-                                           FontSize="18" 
-                                           FontWeight="SemiBold" 
-                                           Foreground="#2C3E50"/>
-                            </Grid>
-
-                            <Border BorderBrush="#EEEEEE" BorderThickness="0,0,0,1" Padding="0,0,0,10" Margin="0,0,0,10">
-                                <StackPanel>
-                                    <TextBlock Text="Phản ánh của bạn đã được tiếp nhận" 
-                                               FontWeight="SemiBold"
-                                               Foreground="#2C3E50"/>
-                                    <TextBlock Text="Phản ánh về xe máy vượt đèn đỏ đã được tiếp nhận và đang trong quá trình xử lý." 
-                                               TextWrapping="Wrap"
-                                               Margin="0,5,0,0"
-                                               Foreground="#555555"/>
-                                    <TextBlock Text="2 giờ trước" 
-                                               FontSize="12"
-                                               Margin="0,5,0,0"
-                                               Foreground="#777777"/>
-                                </StackPanel>
-                            </Border>
-
-                            <Border BorderBrush="#EEEEEE" BorderThickness="0,0,0,1" Padding="0,0,0,10" Margin="0,0,0,10">
-                                <StackPanel>
-                                    <TextBlock Text="Cập nhật trạng thái phản ánh" 
-                                               FontWeight="SemiBold"
-                                               Foreground="#2C3E50"/>
-                                    <TextBlock Text="Phản ánh về ô tô đậu sai quy định đã được xử lý. Vui lòng kiểm tra chi tiết." 
-                                               TextWrapping="Wrap"
-                                               Margin="0,5,0,0"
-                                               Foreground="#555555"/>
-                                    <TextBlock Text="1 ngày trước" 
-                                               FontSize="12"
-                                               Margin="0,5,0,0"
-                                               Foreground="#777777"/>
-                                </StackPanel>
-                            </Border>
-                        </StackPanel>
-                    </Border>
+                    <DataGrid Name="MyReportsGrid" AutoGenerateColumns="False" 
+                             IsReadOnly="True" Height="400">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Mã" Binding="{Binding Id}" Width="80"/>
+                            <DataGridTextColumn Header="Loại vi phạm" Binding="{Binding ViolationType}" Width="120"/>
+                            <DataGridTextColumn Header="Địa điểm" Binding="{Binding Location}" Width="150"/>
+                            <DataGridTextColumn Header="Ngày gửi" Binding="{Binding ReportDate}" Width="100"/>
+                            <DataGridTextColumn Header="Trạng thái" Binding="{Binding Status}" Width="100"/>
+                            <DataGridTextColumn Header="Nội dung vi phạm" Binding="{Binding Description}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </StackPanel>
-            </ScrollViewer>
-        </Grid>
+            </TabItem>
+
+            <!-- Phương tiện -->
+            <TabItem Header="Phương tiện">
+                <StackPanel Margin="20">
+                    <TextBlock Text="Thông tin phương tiện của tôi" FontSize="16" Margin="0,0,0,15"/>
+                    <DataGrid Name="VehiclesGrid" AutoGenerateColumns="False" 
+                             IsReadOnly="True" Height="300">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Biển số" Binding="{Binding LicensePlate}" Width="120"/>
+                            <DataGridTextColumn Header="Loại xe" Binding="{Binding VehicleType}" Width="100"/>
+                            <DataGridTextColumn Header="Hãng xe" Binding="{Binding Model}" Width="120"/>
+                            <DataGridTextColumn Header="Năm sản xuất" Binding="{Binding Year}" Width="100"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Name="AddVehicleButton" Content="Thêm phương tiện" 
+                           Width="150" HorizontalAlignment="Left"/>
+                </StackPanel>
+            </TabItem>
+
+            <!-- Thông báo -->
+            <TabItem Header="Thông báo">
+                <StackPanel Margin="20">
+                    <TextBlock Text="Thông báo hệ thống" FontSize="16" Margin="0,0,0,15"/>
+
+                    <ListBox Name="AllNotificationsList" Height="500">
+                        <ListBoxItem>
+                            <StackPanel Margin="10">
+                                <TextBlock Text="Phản ánh PH001 đã được xử lý" />
+                                <TextBlock Text="Phản ánh của bạn về xe vượt đèn đỏ tại ngã tư Láng Hạ đã được xử lý và chấp nhận."/>
+                                <TextBlock Text="Hôm nay - 14:30" FontSize="12" Foreground="Gray"/>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <StackPanel Margin="10">
+                                <TextBlock Text="Cập nhật trạng thái PH002" />
+                                <TextBlock Text="Phản ánh về xe đậu sai quy định đang được xác minh."/>
+                                <TextBlock Text="Hôm qua - 09:15" FontSize="12" Foreground="Gray"/>
+                            </StackPanel>
+                        </ListBoxItem>
+                    </ListBox>
+                </StackPanel>
+            </TabItem>
+
+        </TabControl>
     </Grid>
 </Window>

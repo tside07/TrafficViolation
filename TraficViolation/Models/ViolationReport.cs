@@ -5,15 +5,15 @@ namespace TraficViolation.Models;
 
 public partial class ViolationReport
 {
-    public long Id { get; set; }
+    public int Id { get; set; }
 
-    public long CitizenId { get; set; }
+    public int CitizenId { get; set; }
 
-    public long VehicleId { get; set; }
+    public int VehicleId { get; set; }
 
-    public long ViolationTypeId { get; set; }
+    public int ViolationTypeId { get; set; }
 
-    public long StatusId { get; set; }
+    public int StatusId { get; set; }
 
     public DateTimeOffset? ReportDate { get; set; }
 

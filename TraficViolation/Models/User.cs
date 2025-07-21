@@ -5,11 +5,11 @@ namespace TraficViolation.Models;
 
 public partial class User
 {
-    public long Id { get; set; }
+    public int Id { get; set; }
 
-    public long? CitizenId { get; set; }
+    public int CitizenId { get; set; }
 
-    public long RoleId { get; set; }
+    public int RoleId { get; set; }
 
     public string Username { get; set; } = null!;
 
